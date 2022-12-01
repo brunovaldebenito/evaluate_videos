@@ -1,13 +1,19 @@
 import cv2
 import numpy as np
 import os
-
+import shutil
 
 def main():
     directory = '/data1/bruno.valdebenito/evaluate_videos/videos_example/'
+    output_dir = '/data1/bruno.valdebenito/evaluate_videos/videos_example_ev/'
     videos_list = os.listdir(directory)
 
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     quit = False
+
     for video in videos_list:
 
         print(os.path.join(directory, video))
@@ -33,6 +39,7 @@ def main():
                     key = cv2.waitKey(25) & 0xFF
                     if key == ord('g'):  # good
                         print("its a good video")
+                        shutil.copy(directory + video, output_dir + video)
                         choose = True
                         # TODO: SAVE
 
@@ -46,7 +53,6 @@ def main():
 
                     if key == ord('p'):  # pause
                         print("Process paused")
-                        # TODO: pause
                         while True:
                             if cv2.waitKey(25) & 0xFF == ord('p'):  # unpause
                                 print("Process continue")
